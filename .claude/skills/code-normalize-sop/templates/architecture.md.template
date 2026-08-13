@@ -1,0 +1,16 @@
+# 系统架构：{{PROJECT_NAME}}
+
+## 1. 业务目标
+{{BUSINESS_DESCRIPTION}}
+
+## 2. 技术栈
+{{TECH_STACK}}
+
+## 3. 模块职责边界（架构师定义）
+{{MODULE_RESPONSIBILITIES}}
+
+## 4. 模块依赖关系（DAG）
+{{DEPENDENCY_GRAPH}}
+
+## 5. 数据流与关键时序
+{{DATA_FLOW_DESCRIPTION}}

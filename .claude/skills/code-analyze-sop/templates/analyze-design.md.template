@@ -1,0 +1,32 @@
+# 模块设计：{{MODULE_NAME}}（代码分析）
+
+## 1. 对外接口签名（从代码提取）
+
+- 函数名：{{FUNCTION_NAME}}
+  - 入参：{{INPUT_PARAMETERS}}（含类型 + 置信度 + 来源文件:行号）
+  - 出参：{{OUTPUT_PARAMETERS}}（含类型 + 置信度 + 来源文件:行号）
+  - 错误码：{{ERROR_CODES}}（含异常类型 + 置信度 + 来源文件:行号）
+
+> 置信度标记: [confirmed] 源码明确 | [inferred] 推断 | [unknown] 无法确定
+
+## 2. 模块职责
+
+**{{RESPONSIBILITY}}** [来源: {{RESPONSIBILITY_SOURCE}}]
+
+## 3. 数据结构（从代码提取）
+
+{{DATA_STRUCTURES}}（含字段 + 类型 + 置信度 + 来源文件:行号）
+
+## 4. 初始化方式
+
+{{INSTANTIATION_DESCRIPTION}} [inferred] 从代码推断
+
+## 5. 异常体系
+
+{{EXCEPTION_HIERARCHY}}（含异常类型 + raise 位置 + except 覆盖范围）
+
+## 6. 依赖关系
+
+- 上游模块：{{UPSTREAM_MODULES}}
+- 外部依赖：{{EXTERNAL_DEPS}}
+- 隐式耦合：{{HIDDEN_COUPLINGS}}

@@ -1,0 +1,32 @@
+# 系统架构：{{PROJECT_NAME}}（代码分析）
+
+> 本文档由 code-analyze-sop 从源码逆向提取生成。每个结论标注置信度：
+> `[confirmed]` 源码明确 | `[inferred]` 推断 | `[unknown]` 无法确定
+
+## 1. 业务目标
+{{BUSINESS_DESCRIPTION}}
+
+## 2. 技术栈
+{{TECH_STACK}}
+
+## 3. 模块职责边界（按功能粒度划分）
+
+### {{MODULE_A_NAME}}
+- **职责**：{{MODULE_A_RESPONSIBILITY}} [来源: {{MODULE_A_SOURCE}}]
+- **边界判定理由**：{{MODULE_A_BOUNDARY_REASON}}
+
+### {{MODULE_B_NAME}}
+- **职责**：{{MODULE_B_RESPONSIBILITY}} [来源: {{MODULE_B_SOURCE}}]
+- **边界判定理由**：{{MODULE_B_BOUNDARY_REASON}}
+
+## 4. 模块依赖关系（DAG）
+
+{{DEPENDENCY_GRAPH}}
+
+> 交叉校验：Scanner 结论 vs Extractor import 证据不一致处已标记。
+
+## 5. 数据流与关键时序
+{{DATA_FLOW_DESCRIPTION}}
+
+## 6. 边界争议
+{{BOUNDARY_DISPUTES}}

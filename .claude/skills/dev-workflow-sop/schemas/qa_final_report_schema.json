@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa_final_report_schema",
+  "title": "最终测试报告",
+  "description": "Phase 5 全部模块验收测试通过后产出的最终测试报告 Schema",
+  "type": "object",
+  "required": ["total_tests", "passed", "failed", "coverage", "modules", "acceptance_tests", "bugs", "conclusion"],
+  "properties": {
+    "total_tests": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "测试总数量"
+    },
+    "passed": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "通过的测试数量"
+    },
+    "failed": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "失败的测试数量"
+    },
+    "coverage": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 100.0,
+      "description": "代码覆盖率百分比"
+    },
+    "modules": {
+      "type": "object",
+      "description": "各模块测试统计",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["unit_tests", "contract_tests"],
+        "properties": {
+          "unit_tests": {
+            "type": "object",
+            "required": ["total", "passed"],
+            "properties": {
+              "total": { "type": "integer", "minimum": 0 },
+              "passed": { "type": "integer", "minimum": 0 }
+            }
+          },
+          "contract_tests": {
+            "type": "object",
+            "required": ["total", "passed"],
+            "properties": {
+              "total": { "type": "integer", "minimum": 0 },
+              "passed": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    },
+    "acceptance_tests": {
+      "type": "object",
+      "required": ["total", "passed"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 }
+      },
+      "description": "验收测试统计"
+    },
+    "bugs": {
+      "type": "array",
+      "description": "关联的 Bug ID 列表",
+      "items": {
+        "type": "string"
+      }
+    },
+    "conclusion": {
+      "type": "string",
+      "enum": ["PASS", "FAIL"],
+      "description": "最终结论：PASS 表示全部通过可交付，FAIL 表示存在未解决的问题"
+    }
+  }
+}

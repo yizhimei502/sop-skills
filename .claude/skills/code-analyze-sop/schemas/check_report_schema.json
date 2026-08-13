@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "check_report_schema",
+  "title": "一致性检查差异报告",
+  "description": "code-analyze-sop --check 模式产出的机读差异报告 Schema",
+  "type": "object",
+  "required": ["check_time", "design_source", "summary", "details", "skipped_docs"],
+  "properties": {
+    "check_time": { "type": "string", "description": "ISO 8601 时间戳" },
+    "design_source": { "type": "string", "description": "比对使用的设计文档来源路径" },
+    "summary": {
+      "type": "object",
+      "required": ["total_checked", "ok", "missing_in_doc", "missing_in_code", "mismatch", "skipped"],
+      "properties": {
+        "total_checked": { "type": "integer", "minimum": 0 },
+        "ok": { "type": "integer", "minimum": 0 },
+        "missing_in_doc": { "type": "integer", "minimum": 0 },
+        "missing_in_code": { "type": "integer", "minimum": 0 },
+        "mismatch": { "type": "integer", "minimum": 0 },
+        "skipped": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "details": {
+      "type": "array",
+      "description": "ok 条目不在此列出，只计数",
+      "items": {
+        "type": "object",
+        "required": ["file", "signature", "diff_type"],
+        "properties": {
+          "file": { "type": "string" },
+          "signature": { "type": "string" },
+          "diff_type": { "type": "string", "enum": ["missing_in_doc", "missing_in_code", "mismatch"] },
+          "doc_version": { "type": ["string", "null"] },
+          "code_version": { "type": ["string", "null"] },
+          "detail": { "type": "string" }
+        }
+      }
+    },
+    "skipped_docs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "reason"],
+        "properties": {
+          "file": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    }
+  }
+}

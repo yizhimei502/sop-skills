@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bug_schema",
+  "title": "Bug 报告",
+  "description": "Phase 5 测试Agent 发现 Bug 时产出的 Bug 报告 Schema",
+  "type": "object",
+  "required": ["bug_id", "module", "test_type", "test_case", "description", "reproduction_steps", "expected", "actual"],
+  "properties": {
+    "bug_id": {
+      "type": "string",
+      "description": "Bug 唯一标识，格式如 BUG-001",
+      "pattern": "^BUG-\\d{3}$"
+    },
+    "module": {
+      "type": "string",
+      "description": "模块名"
+    },
+    "test_type": {
+      "type": "string",
+      "enum": ["unit", "contract", "acceptance"],
+      "description": "发现 Bug 的测试类型"
+    },
+    "test_case": {
+      "type": "string",
+      "description": "失败的测试用例名称"
+    },
+    "description": {
+      "type": "string",
+      "description": "Bug 描述"
+    },
+    "reproduction_steps": {
+      "type": "string",
+      "description": "复现步骤，如 '1. ... 2. ...'"
+    },
+    "expected": {
+      "type": "string",
+      "description": "预期结果（依据设计文档）"
+    },
+    "actual": {
+      "type": "string",
+      "description": "实际结果（代码运行结果）"
+    },
+    "log_snippet": {
+      "type": "string",
+      "description": "关键错误日志（如有）"
+    }
+  }
+}

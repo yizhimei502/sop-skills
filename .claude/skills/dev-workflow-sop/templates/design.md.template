@@ -1,0 +1,22 @@
+# 模块设计：{{MODULE_NAME}}
+
+## 1. 对外接口签名（由设计师定义，开发与测试只读）
+- 函数名：{{FUNCTION_NAME}}
+- 入参：{{INPUT_PARAMETERS}}（含类型说明）
+- 出参：{{OUTPUT_PARAMETERS}}（含类型说明）
+- 错误码：{{ERROR_CODES}}（含含义说明）
+
+## 2. 初始化方式
+{{INSTANTIATION_DESCRIPTION}}
+
+## 3. 内部时序与处理流程
+{{INTERNAL_SEQUENCE}}
+
+## 4. 边界条件与异常处理
+- 空值处理：{{NULL_HANDLING}}
+- 超时处理：{{TIMEOUT_HANDLING}}
+- 并发处理：{{CONCURRENCY_HANDLING}}
+- 异常处理：{{EXCEPTION_HANDLING}}
+
+## 5. 依赖的上游模块与调用方式
+{{UPSTREAM_DEPENDENCIES}}

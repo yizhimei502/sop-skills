@@ -1,0 +1,22 @@
+# {{PROJECT_NAME}} 用户手册
+
+## 1. 项目简介
+{{PROJECT_OVERVIEW}}
+
+## 2. 安装说明
+{{INSTALLATION_INSTRUCTIONS}}
+
+## 3. 快速开始
+{{QUICK_START_GUIDE}}
+
+## 4. 详细使用说明
+{{DETAILED_USAGE}}
+
+## 5. 配置说明
+{{CONFIGURATION_GUIDE}}
+
+## 6. 常见问题（FAQ）
+{{FAQ_SECTION}}
+
+## 7. 错误码对照表
+{{ERROR_CODE_REFERENCE}}

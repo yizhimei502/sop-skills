@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review_schema",
+  "title": "评审报告",
+  "description": "Phase 3 评审员产出的评审报告 Schema",
+  "type": "object",
+  "required": ["result", "module", "comments", "simulation_result", "unclear_points"],
+  "properties": {
+    "result": {
+      "type": "string",
+      "enum": ["pass", "fail"],
+      "description": "评审结果：pass 表示通过，fail 表示打回"
+    },
+    "module": {
+      "type": "string",
+      "description": "被评审的模块名"
+    },
+    "comments": {
+      "type": "array",
+      "description": "评审意见列表",
+      "items": {
+        "type": "object",
+        "required": ["section", "issue", "suggestion"],
+        "properties": {
+          "section": {
+            "type": "string",
+            "description": "文档中的章节名"
+          },
+          "issue": {
+            "type": "string",
+            "description": "发现的具体问题"
+          },
+          "suggestion": {
+            "type": "string",
+            "description": "修改建议"
+          }
+        }
+      }
+    },
+    "simulation_result": {
+      "type": "string",
+      "description": "评审员仅凭文档模拟调用的伪代码或结论（闭卷考试的核心证据）"
+    },
+    "unclear_points": {
+      "type": "array",
+      "description": "文档中不清晰、导致无法模拟实现的地方",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
