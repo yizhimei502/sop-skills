@@ -8,7 +8,7 @@ description: >
   to check doc-code consistency. Do NOT use this skill for new-project development (use dev-workflow-sop).
 ---
 
-<!-- 本文件基于 code-analyze-sop.md v1.0 生成 -->
+<!-- 本文件基于 code-analyze-sop.md v1.1 生成 -->
 
 # code-analyze-sop — 代码分析 Skill
 
@@ -16,7 +16,7 @@ description: >
 
 - **名称**：`code-analyze-sop`
 - **输入**：已有代码仓库路径
-- **输出**：架构文档、模块设计文档、模块注册表、分析报告（含置信度评分）
+- **输出**：架构文档、模块设计文档、模块注册表、分析报告（含置信度评分）、**精华文档（ESSENCE.md）**
 - **核心原则**：**只读**——绝不修改原仓库任何源文件、目录结构或文件名
 - **产出标注**：每个结论标记置信度 → `[confirmed]`（源码明确）| `[inferred]`（推断）| `[unknown]`（无法确定）
 
@@ -28,7 +28,7 @@ dev-workflow-sop              code-analyze-sop
 需求 → 设计 → 代码              代码 → 提取 → 文档
 设计先行，编码为后              代码已有，文档后补
 接口签名：设计师定义             接口签名：从代码提取
-5 角色全流程                    3+3 角色（扫描→提取→核查 + ABC验证）
+5 角色全流程                    4+3 角色（扫描→提取→核查→提炼 + ABC验证）
 必改代码                        绝不该代码
 ```
 
@@ -54,6 +54,7 @@ dev-workflow-sop              code-analyze-sop
 │
 ├── MODULE_REGISTRY.json                # Phase C 产出
 ├── README.patch.md                     # Phase C 产出（README 更新建议，用户自行拷贝）
+├── ESSENCE.md                          # Phase E 产出（项目精华：优秀设计/模式/逻辑，见第七节）
 │
 └── /reports
     └── /analyze
@@ -84,15 +85,16 @@ git commit -m "analyze: 初始代码分析完成（可信度 XX%）"
 
 ---
 
-## 三、角色定义（3+3 角色）
+## 三、角色定义（4+3 角色）
 
-### 3.1 分析流水线（Phase A-C）
+### 3.1 分析流水线（Phase A-E）
 
 | 角色 | 职责 | 输入 | 产出 |
 |------|------|------|------|
 | **扫描者**（Scanner） | 仓库全景扫描：技术栈、目录拓扑、模块边界、外部依赖。**按功能粒度划分模块**，为每个模块边界写判定理由 | 目录结构 + 配置文件 + import 语句 | 技术栈清单、模块候选列表（含边界理由）、依赖图谱、跳过文件清单 |
 | **提取者**（Extractor） | 接口签名提取：逐文件深入，标注置信度 | Phase A 模块列表 + 源码 | 接口签名清单（含置信度+来源）、数据结构清单、异常清单 |
 | **核查者**（Auditor） | 文档生成：综合 Phase A + B 数据，渲染模板 | 全部分析数据 + 已有文档（如有） | `/docs/architecture.md` + `/docs/design/*.md` + `MODULE_REGISTRY.json` + 分析报告 |
+| **精华提炼者**（Essence Distiller） | 提炼项目**可迁移精华**（优秀设计/模式/逻辑），反向提炼坑 | Phase A-D 全部产出 + 源码 | `ESSENCE.md`（含价值分级 + 反模式教训，见第七节） |
 
 ### 3.2 ABC 验证闭环（Phase D）
 
@@ -114,12 +116,14 @@ git commit -m "analyze: 初始代码分析完成（可信度 XX%）"
 | **Phase B** | 提取者 | Phase A 产出 + 源码 | 1. 逐模块提取公开函数/类/方法签名<br>2. 标注置信度<br>3. 提取模块职责（`__init__.py` docstring→confirmed；公共函数 docstring 聚合→inferred；目录名→inferred）<br>4. 提取异常类型<br>5. 提取数据结构<br>6. 梳理调用关系<br>7. 识别隐式耦合<br>8. 标记无法解析依赖 → `[unresolved_dependency]` | 接口签名清单（含置信度+来源）、模块职责（含来源）、数据结构清单、异常清单、调用关系矩阵 |
 | **Phase C** | 核查者 | Phase A + B 全部分析数据 | 1. 渲染 `architecture.md`<br>2. 渲染每个模块 `design.md`<br>3. 生成 `MODULE_REGISTRY.json`<br>4. 生成分析报告（可信度评分 + 复核清单）<br>5. 产出 `README.patch.md`<br>6. **交叉校验**：Scanner 的依赖结论 vs Extractor 的 import 证据，不一致入 `hidden_couplings` | `architecture.md`、`module_<X>_design.md`、`MODULE_REGISTRY.json`、`analyze_report.json/.md`、`README.patch.md` |
 | **Phase D** | Agent B + C + 评估员 | **B**：源码 + 分析产出<br>**C**：仅分析产出，严禁源码 | ABC 验证循环（见下章） | 验证轮次报告，写入 `analyze_report` 的 `verification` 字段 |
+| **Phase E** | 精华提炼者 | Phase A-D 全部产出 + 源码 | 提炼优秀设计/模式/逻辑，分级标注价值与证据，反向提炼坑 | `ESSENCE.md`（项目精华文档） |
 
 ### 场景路由
 
 | 场景 | 触发语示例 | 路由 |
 |------|-----------|------|
-| 全量分析 | "帮我分析一下这个仓库"、"看看这个项目做了什么" | Phase A → B → C 全量 |
+| 全量分析 | "帮我分析一下这个仓库"、"看看这个项目做了什么" | Phase A → B → C → D → E 全量 |
+| 精华提取 | "这个项目有什么值得学的"、"分析完顺便提取下精华" | Phase A → E（可跳过 B/C/D，直接提炼） |
 | 只出架构图 | "这个项目的模块依赖是什么" | Phase A（仅扫描） |
 | 只提取接口 | "把 API 签名列出来" | Phase A → B（跳过文档渲染） |
 | 一致性检查 | "文档和代码一致吗"、"check 一下" | `--check` 模式 |
@@ -257,7 +261,59 @@ Scanner 的依赖结论 vs Extractor 的 import 证据不一致 → 标记进 `h
 
 ---
 
-## 七、一致性检查模式（`--check`）
+## 七、精华提取（Phase E 详细规范）
+
+### 7.1 定位
+
+Phase A-D 回答了项目"**是什么**"（架构、接口、行为）。Phase E 回答项目"**有什么值得学的**"——
+提炼**可迁移精华**：优秀的设计、模式、逻辑，以及反向的"可规避的坑"。
+
+产出 `ESSENCE.md` 是**可迁移资产**（transferable asset），供：
+- 后续新项目设计阶段借鉴（衔接 `dev-workflow-sop`）
+- 同类项目（同类技术栈 / 同类业务）做相似需求时直接照搬
+- 团队内部分享"这个项目做对了什么、踩了什么坑"
+
+### 7.2 角色与输入输出
+
+**精华提炼者（Essence Distiller）** 是分析管线的收尾角色：
+- **输入**：Phase A-D 全部产出 + 源码（只读）
+- **产出**：`<项目>-analyze-sop/ESSENCE.md`（按 `templates/essence.md.template` 渲染）
+- **遵循**：`prompts/essence-distiller.md`
+- **时机**：在 Phase D（ABC 验证）**之后**执行——只有文档被验证可靠，精华提炼才有可信基础
+
+### 7.3 提炼准则
+
+1. **宁缺毋滥**：只收"能在其他项目复用的"，拒绝流水账。每条必须能回答"好在哪 / 何时复用"，答不上就删。
+2. **证据强制**：每条标注源码位置 `file:line`；推断内容标 `[inferred]`。
+3. **三分类**：
+   - **设计**（架构层）：模块切分、抽象边界、存储选型等整体取舍 → 值得整体模仿
+   - **模式**（实现层）：限流、重试、降级、缓存、幂等等可复用套路 → 值得局部照搬
+   - **逻辑**（细节层）：小而精的算法与边界处理 → 值得抄进工具函数
+4. **价值分级**：⭐核心（整体模仿）| ◎亮点（局部借鉴）| ·细节（小而美）
+5. **反向提炼**：从 `analyze_report` 的 `hidden_couplings` / 需人工复核项反向提炼"坑"（问题/影响/正确做法），与正向精华互补，避免精华文档变成纯表扬信。
+6. **不重复文档**：架构与接口细节已在 design 文档，ESSENCE 只讲"为什么好、怎么用"。
+
+### 7.4 ESSENCE.md 结构
+
+按 `templates/essence.md.template`：
+
+```
+0. 精华总览（TL;DR 表格：编号/精华点/类别/价值/出处）
+1. 优秀设计（架构层）— D1, D2, …
+2. 优秀模式（实现层）— P1, P2, …
+3. 精妙逻辑（细节层）— L1, L2, …
+4. 可规避的坑（反模式）— A1, A2, …
+```
+
+篇幅与项目复杂度匹配：大项目 15-30 条，中小项目 5-15 条。
+
+### 7.5 与验证闭环的关系
+
+Phase E 不参与 ABC 闭环——精华判断本质是主观的，无法像接口签名那样客观判定对错。因此精华条目只要求证据准确，不要求客观验证。
+
+---
+
+## 八、一致性检查模式（`--check`）
 
 比对当前代码与已有设计文档，只出差异报告，不改任何文件。
 
@@ -280,7 +336,7 @@ Scanner 的依赖结论 vs Extractor 的 import 证据不一致 → 标记进 `h
 
 ---
 
-## 八、增量分析（`--since`）
+## 九、增量分析（`--since`）
 
 ```
 code-analyze-sop /path/to/repo --since HEAD~10
@@ -293,12 +349,13 @@ code-analyze-sop /path/to/repo --since HEAD~10
 3. 增量更新设计文档和注册表（新签名追加，已删除标记 archived）
 4. 未变更的模块**原样保留**（包括人工修改过的内容）
 5. 重新计算可信度评分
+6. （可选）增量刷新 `ESSENCE.md`：仅重评与变更文件相关的精华条目，未变的保留
 
 前提：产出目录已在 Git 管理下，且存在上一份分析报告。
 
 ---
 
-## 九、Monorepo 多项目分析模式
+## 十、Monorepo 多项目分析模式
 
 检测条件（满足 ≥ 2 个即判定为 monorepo）：
 
@@ -306,11 +363,11 @@ code-analyze-sop /path/to/repo --since HEAD~10
 2. 多个包管理器文件共存（`package.json` + `requirements.txt` + `go.mod` 等）
 3. 存在 workspace/workspaces 配置
 
-判定后**每个子项目独立分析**（`packages/frontend-analyze-sop/` 等），顶层产出 `monorepo_index.md` 汇总。
+判定后**每个子项目独立分析**（`packages/frontend-analyze-sop/` 等），顶层产出 `monorepo_index.md` 汇总。每个子项目独立产出各自的 `ESSENCE.md`，`monorepo_index.md` 统一链接。
 
 ---
 
-## 十、执行指南
+## 十一、执行指南
 
 ### 模板与 Schema 使用
 
@@ -320,9 +377,11 @@ code-analyze-sop /path/to/repo --since HEAD~10
 | 模块设计文档（提取版） | `templates/analyze-design.md.template` |
 | 分析报告 | 遵循 `schemas/analyze_report_schema.json` |
 | 差异报告 | 遵循 `schemas/check_report_schema.json` |
+| 精华文档 | `templates/essence.md.template`（Phase E） |
 | 扫描者 Prompt | `prompts/scanner.md`（Phase A） |
 | 提取者 Prompt | `prompts/extractor.md`（Phase B） |
 | 核查者 Prompt | `prompts/auditor.md`（Phase C） |
+| 精华提炼者 Prompt | `prompts/essence-distiller.md`（Phase E） |
 | Agent B Prompt | `prompts/agent-b.md`（出题） |
 | Agent C Prompt | `prompts/agent-c.md`（答题） |
 
@@ -335,12 +394,13 @@ code-analyze-sop /path/to/repo --since HEAD~10
 4. 加载 auditor.md → Phase C
 5. 加载 agent-b.md + agent-c.md → Phase D（ABC 验证循环）
 6. 生成 analyze_report.json/.md（含 verification 字段）
-7. git init 产出目录 + snapshot commit
+7. 加载 essence-distiller.md → Phase E（提炼 ESSENCE.md）
+8. git init 产出目录 + snapshot commit
 ```
 
 ---
 
-## 十一、与其他 Skill 的衔接
+## 十二、与其他 Skill 的衔接
 
 ```
 code-analyze-sop 产出的 MODULE_REGISTRY.json
@@ -352,11 +412,17 @@ code-analyze-sop 产出的 normalization_hints（analyze_report.json）
    作为 code-normalize（未来 Skill 3）的输入
        ↓
    code-normalize 按 SOP 重构目录、补齐测试
+
+code-analyze-sop 产出的 ESSENCE.md（可迁移精华）
+       ↓
+   作为新项目设计阶段的"经验库"
+       ↓
+   衔接 dev-workflow-sop：新项目做相似需求时，从 ESSENCE 直接借鉴已验证的设计/模式/逻辑
 ```
 
 ---
 
-## 十二、参考文件索引
+## 十三、参考文件索引
 
 | 文件 | 路径 | 用途 |
 |------|------|------|
@@ -364,6 +430,8 @@ code-analyze-sop 产出的 normalization_hints（analyze_report.json）
 | 设计文档模板（提取版） | `templates/analyze-design.md.template` | Phase C 渲染模块设计文档 |
 | 分析报告 Schema | `schemas/analyze_report_schema.json` | 机读分析报告结构 |
 | 差异报告 Schema | `schemas/check_report_schema.json` | --check 差异报告结构 |
+| 精华文档模板 | `templates/essence.md.template` | Phase E 渲染 ESSENCE.md |
+| 精华提炼者 Prompt | `prompts/essence-distiller.md` | Phase E 角色定义 |
 | 扫描者 Prompt | `prompts/scanner.md` | Phase A 角色定义 |
 | 提取者 Prompt | `prompts/extractor.md` | Phase B 角色定义 |
 | 核查者 Prompt | `prompts/auditor.md` | Phase C 角色定义 |
@@ -372,4 +440,4 @@ code-analyze-sop 产出的 normalization_hints（analyze_report.json）
 
 ---
 
-**规范版本**：v1.0 | **最后更新**：2026-08-08
+**规范版本**：v1.1 | **最后更新**：2026-08-19
