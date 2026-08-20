@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "analyze_report_schema",
   "title": "代码分析报告",
-  "description": "code-analyze-sop Phase C 产出的机读分析报告 Schema",
+  "description": "sop-code-analyze Phase C 产出的机读分析报告 Schema",
   "type": "object",
   "required": [
     "project_name", "analyzed_at", "tech_stack", "confidence_score",

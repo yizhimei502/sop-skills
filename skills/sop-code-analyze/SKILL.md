@@ -1,29 +1,29 @@
 ---
-name: code-analyze-sop
+name: sop-code-analyze
 description: >
   代码分析 Skill — 逆向工程已有代码仓库，提取架构与接口，输出设计文档和分析报告。
   TRIGGER when the user mentions: analyze a codebase, understand existing code, generate docs from code,
   分析代码仓库、看看这个项目做了什么、把接口签名列出来、文档和代码一致吗、代码考古、逆向理解已有项目。
   Also trigger when the user gives you an existing repo path and asks what it does / to produce docs /
-  to check doc-code consistency. Do NOT use this skill for new-project development (use dev-workflow-sop).
+  to check doc-code consistency. Do NOT use this skill for new-project development (use sop-dev-workflow).
 ---
 
-<!-- 本文件基于 code-analyze-sop.md v1.1 生成 -->
+<!-- 本文件基于 sop-code-analyze.md v1.1 生成 -->
 
-# code-analyze-sop — 代码分析 Skill
+# sop-code-analyze — 代码分析 Skill
 
 ## 一、核心定位
 
-- **名称**：`code-analyze-sop`
+- **名称**：`sop-code-analyze`
 - **输入**：已有代码仓库路径
 - **输出**：架构文档、模块设计文档、模块注册表、分析报告（含置信度评分）、**精华文档（ESSENCE.md）**
 - **核心原则**：**只读**——绝不修改原仓库任何源文件、目录结构或文件名
 - **产出标注**：每个结论标记置信度 → `[confirmed]`（源码明确）| `[inferred]`（推断）| `[unknown]`（无法确定）
 
-### 与 `dev-workflow-sop` 的关系
+### 与 `sop-dev-workflow` 的关系
 
 ```
-dev-workflow-sop              code-analyze-sop
+sop-dev-workflow              sop-code-analyze
 ─────────────────              ────────────
 需求 → 设计 → 代码              代码 → 提取 → 文档
 设计先行，编码为后              代码已有，文档后补
@@ -81,7 +81,7 @@ git commit -m "analyze: 初始代码分析完成（可信度 XX%）"
 
 ### 对原仓库 README 的处理
 
-`code-analyze-sop` 不写入原仓库。如需更新 README，产出 `README.patch.md` 包含建议内容，用户自行 copy-paste。
+`sop-code-analyze` 不写入原仓库。如需更新 README，产出 `README.patch.md` 包含建议内容，用户自行 copy-paste。
 
 ---
 
@@ -269,7 +269,7 @@ Phase A-D 回答了项目"**是什么**"（架构、接口、行为）。Phase E
 提炼**可迁移精华**：优秀的设计、模式、逻辑，以及反向的"可规避的坑"。
 
 产出 `ESSENCE.md` 是**可迁移资产**（transferable asset），供：
-- 后续新项目设计阶段借鉴（衔接 `dev-workflow-sop`）
+- 后续新项目设计阶段借鉴（衔接 `sop-dev-workflow`）
 - 同类项目（同类技术栈 / 同类业务）做相似需求时直接照搬
 - 团队内部分享"这个项目做对了什么、踩了什么坑"
 
@@ -326,9 +326,9 @@ Phase E 不参与 ABC 闭环——精华判断本质是主观的，无法像接�
 
 文档来源自动检测，优先级递减：
 
-1. `<项目名>-analyze-sop/docs/design/`（之前 code-analyze-sop 产出的）
+1. `<项目名>-analyze-sop/docs/design/`（之前 sop-code-analyze 产出的）
 2. `<项目>/docs/design/`（仓库自带）
-3. 都没有 → 报错"没有可对比的设计文档，请先运行 code-analyze-sop"
+3. 都没有 → 报错"没有可对比的设计文档，请先运行 sop-code-analyze"
 
 非标准格式文档 → 跳过比对，报告末尾列"无法比对的文档"。
 
@@ -339,7 +339,7 @@ Phase E 不参与 ABC 闭环——精华判断本质是主观的，无法像接�
 ## 九、增量分析（`--since`）
 
 ```
-code-analyze-sop /path/to/repo --since HEAD~10
+sop-code-analyze /path/to/repo --since HEAD~10
 ```
 
 增量模式流程：
@@ -403,21 +403,21 @@ code-analyze-sop /path/to/repo --since HEAD~10
 ## 十二、与其他 Skill 的衔接
 
 ```
-code-analyze-sop 产出的 MODULE_REGISTRY.json
+sop-code-analyze 产出的 MODULE_REGISTRY.json
        +
-code-analyze-sop 产出的 /docs/design/*.md
+sop-code-analyze 产出的 /docs/design/*.md
        +
-code-analyze-sop 产出的 normalization_hints（analyze_report.json）
+sop-code-analyze 产出的 normalization_hints（analyze_report.json）
        ↓
    作为 code-normalize（未来 Skill 3）的输入
        ↓
    code-normalize 按 SOP 重构目录、补齐测试
 
-code-analyze-sop 产出的 ESSENCE.md（可迁移精华）
+sop-code-analyze 产出的 ESSENCE.md（可迁移精华）
        ↓
    作为新项目设计阶段的"经验库"
        ↓
-   衔接 dev-workflow-sop：新项目做相似需求时，从 ESSENCE 直接借鉴已验证的设计/模式/逻辑
+   衔接 sop-dev-workflow：新项目做相似需求时，从 ESSENCE 直接借鉴已验证的设计/模式/逻辑
 ```
 
 ---

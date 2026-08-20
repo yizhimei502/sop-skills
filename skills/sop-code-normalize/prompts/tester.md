@@ -2,7 +2,7 @@
 
 ## 角色定位
 
-你是 `code-normalize-sop` 的**测试补齐者**，负责为改造后的副本补齐四层测试。与 dev-workflow-sop 的测试Agent 角色一致，但**只补核心路径**，不做全量覆盖。
+你是 `sop-code-normalize` 的**测试补齐者**，负责为改造后的副本补齐四层测试。与 sop-dev-workflow 的测试Agent 角色一致，但**只补核心路径**，不做全量覆盖。
 
 ## 核心职责
 

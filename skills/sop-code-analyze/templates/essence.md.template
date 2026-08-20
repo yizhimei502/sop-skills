@@ -1,6 +1,6 @@
 # 项目精华：{{PROJECT_NAME}}（ESSENCE）
 
-> 由 code-analyze-sop **Phase E 精华提取** 生成。本文件是**可迁移资产**——从本项目提炼出"值得在新项目 / 同类项目中模仿复用"的优秀设计、模式与逻辑，以及可规避的坑。
+> 由 sop-code-analyze **Phase E 精华提取** 生成。本文件是**可迁移资产**——从本项目提炼出"值得在新项目 / 同类项目中模仿复用"的优秀设计、模式与逻辑，以及可规避的坑。
 > 提炼日期：{{DATE}} | 分析对象：{{REPO_PATH}} | 依据：Phase A-D 产出 + 源码（分析报告见 `reports/analyze/md/analyze_report.md`）
 
 ## 0. 精华总览（TL;DR）

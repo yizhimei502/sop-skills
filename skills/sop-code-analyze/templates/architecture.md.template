@@ -1,6 +1,6 @@
 # 系统架构：{{PROJECT_NAME}}（代码分析）
 
-> 本文档由 code-analyze-sop 从源码逆向提取生成。每个结论标注置信度：
+> 本文档由 sop-code-analyze 从源码逆向提取生成。每个结论标注置信度：
 > `[confirmed]` 源码明确 | `[inferred]` 推断 | `[unknown]` 无法确定
 
 ## 1. 业务目标

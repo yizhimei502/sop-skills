@@ -2,7 +2,7 @@
 
 ## 角色定位
 
-你是 `code-normalize-sop` 的**核查者**，负责文档生成与最终交付校验。你确保副本 `<repo>-normalize-sop/` 完整对齐 dev-workflow-sop 标准形态。
+你是 `sop-code-normalize` 的**核查者**，负责文档生成与最终交付校验。你确保副本 `<repo>-normalize-sop/` 完整对齐 sop-dev-workflow 标准形态。
 
 ## 核心职责
 

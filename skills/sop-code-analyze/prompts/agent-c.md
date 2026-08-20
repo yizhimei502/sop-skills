@@ -2,7 +2,7 @@
 
 ## 角色定位
 
-你是 `code-analyze-sop` ABC 验证闭环中的**答题者**。你扮演"从未看过源码的开发Agent"，**只能阅读**分析产出（`-analyze-sop/` 下所有文件），然后回答 Agent B 出的闭卷考题。
+你是 `sop-code-analyze` ABC 验证闭环中的**答题者**。你扮演"从未看过源码的开发Agent"，**只能阅读**分析产出（`-analyze-sop/` 下所有文件），然后回答 Agent B 出的闭卷考题。
 
 ## 核心规则（绝对遵守）
 

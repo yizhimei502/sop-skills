@@ -1,54 +1,54 @@
 ---
-name: code-normalize-sop
+name: sop-code-normalize
 description: >
-  代码规范化改造 Skill — 将已有代码仓库改造为对齐 dev-workflow-sop 标准的完整工程。
+  代码规范化改造 Skill — 将已有代码仓库改造为对齐 sop-dev-workflow 标准的完整工程。
   TRIGGER when the user mentions: normalize legacy code, refactor to standard structure,
   规范化改造、把旧代码整理成标准工程、对齐 SOP、目录重构、补齐测试和文档。
-  Also trigger when the user has a code-analyze-sop blueprint and wants to restructure the repo
-  to dev-workflow-sop standard. Requires a prior code-analyze-sop run (blueprint input).
+  Also trigger when the user has a sop-code-analyze blueprint and wants to restructure the repo
+  to sop-dev-workflow standard. Requires a prior sop-code-analyze run (blueprint input).
 ---
 
-<!-- 本文件基于 code-normalize-sop.md v1.0 生成 -->
+<!-- 本文件基于 sop-code-normalize.md v1.0 生成 -->
 
-# code-normalize-sop — 代码规范化改造 Skill
+# sop-code-normalize — 代码规范化改造 Skill
 
 ## 一、核心定位
 
-- **名称**：`code-normalize-sop`
+- **名称**：`sop-code-normalize`
 - **输入**：
   - 原仓库 `<repo>/`（只读，改造对象）
-  - 蓝图 `<repo>-analyze-sop/`（code-analyze-sop 产物，复用）
+  - 蓝图 `<repo>-analyze-sop/`（sop-code-analyze 产物，复用）
 - **输出**：`<repo>-normalize-sop/` —— 规范化后的完整工程副本
 - **核心原则**：
-  - **原仓库永不修改**（与 code-analyze-sop 一致）
-  - **最终产物对齐 dev-workflow-sop 标准形态**
-- **北极星**：改造终点是"完整工程对齐"——目录结构、模块注册表、设计文档、四层测试、报告双格式、用户手册全部就位，后续可无缝进入 dev-workflow-sop 正常流程
+  - **原仓库永不修改**（与 sop-code-analyze 一致）
+  - **最终产物对齐 sop-dev-workflow 标准形态**
+- **北极星**：改造终点是"完整工程对齐"——目录结构、模块注册表、设计文档、四层测试、报告双格式、用户手册全部就位，后续可无缝进入 sop-dev-workflow 正常流程
 
 ### Skill 流水线关系
 
 ```
-dev-workflow-sop      从零造，定义"标准形态"
+sop-dev-workflow      从零造，定义"标准形态"
       ▲
       │ 对齐目标
-code-normalize-sop    在副本上改造，补齐对齐
+sop-code-normalize    在副本上改造，补齐对齐
       ▲
       │ 复用蓝图
-code-analyze-sop      只读逆向，产出蓝图
+sop-code-analyze      只读逆向，产出蓝图
 ```
 
 完整链路：
 
 ```
 原仓库
-  │  code-analyze-sop（只读）
+  │  sop-code-analyze（只读）
   ▼
 <repo>-analyze-sop/   ← 蓝图：注册表 + design docs + normalization_hints
-  │  code-normalize-sop（克隆改造）
+  │  sop-code-normalize（克隆改造）
   ▼
-<repo>-normalize-sop/ ← 对齐 dev-workflow-sop 的完整工程
+<repo>-normalize-sop/ ← 对齐 sop-dev-workflow 的完整工程
   │  之后
   ▼
-新增功能 → 走 dev-workflow-sop 正常流程
+新增功能 → 走 sop-dev-workflow 正常流程
 ```
 
 ---
@@ -72,13 +72,13 @@ code-analyze-sop      只读逆向，产出蓝图
 
 ---
 
-## 三、对齐目标（dev-workflow-sop 标准形态）
+## 三、对齐目标（sop-dev-workflow 标准形态）
 
 改造完成后，`<repo>-normalize-sop/` 必须呈现以下结构：
 
 ```
 <repo>-normalize-sop/
-├── .gitignore                          # 对齐 dev-workflow-sop 强制内容
+├── .gitignore                          # 对齐 sop-dev-workflow 强制内容
 ├── MODULE_REGISTRY.json                # 对齐注册表 Schema
 ├── README.md
 ├── /docs
@@ -105,7 +105,7 @@ code-analyze-sop      只读逆向，产出蓝图
 | 5 | 四层测试 | smoke + unit + contract + acceptance 齐备 |
 | 6 | 测试报告 | qa_final_report.json + .md 双格式，结论 PASS |
 | 7 | 用户手册 | docs/user_manual.md 存在 |
-| 8 | Git 提交 | 符合 dev-workflow-sop 提交规范 |
+| 8 | Git 提交 | 符合 sop-dev-workflow 提交规范 |
 
 ---
 
@@ -129,7 +129,7 @@ code-analyze-sop      只读逆向，产出蓝图
 | **Phase 1 结构重构**（L1） | 重构者 | 蓝图注册表 + 副本源码 | 1. 按 `src_path` 重组 src 目录<br>2. 同步修改 import 路径<br>3. 修改测试/脚本/配置中的旧路径引用<br>4. 补全 SOP 骨架（.gitignore、/configs、/docs、/reports）<br>5. 每模块独立 commit | 重构后的 src + 骨架目录 |
 | **Phase 2 接口规范化**（L2） | 重构者 | normalization_hints + design docs | 1. 按 hints 逐条补类型注解、docstring<br>2. **`[inferred]` 接口先确认**：向用户确认实际类型后才补，绝不按猜测写死<br>3. 统一命名规范<br>4. 每个 hint 独立 commit | 规范化后的源码 |
 | **Phase 3 契约对齐验证** | 审计员 | 改造前后源码 + design docs | 1. **基线比对**：改造前记录测试输出（无测试则写冒烟锚点）<br>2. 改造后复跑基线，diff 输出<br>3. **契约审计**：接口签名是否与 design docs 一致<br>4. 不一致 → 阻断并修复 | 契约审计报告 + 基线比对结果 |
-| **Phase 4 测试补齐** | 测试Agent | 全部 design docs + 副本源码 | 1. 冒烟测试补齐（开发Agent）<br>2. **单元/契约/验收只补核心路径**（主流程、关键接口、主要异常分支，不做全量 ≥80% 覆盖）<br>3. 按 dev-workflow-sop Phase 5 流程执行<br>4. 产出 qa_final_report.json/.md | tests/ 四层 + 测试报告 |
+| **Phase 4 测试补齐** | 测试Agent | 全部 design docs + 副本源码 | 1. 冒烟测试补齐（开发Agent）<br>2. **单元/契约/验收只补核心路径**（主流程、关键接口、主要异常分支，不做全量 ≥80% 覆盖）<br>3. 按 sop-dev-workflow Phase 5 流程执行<br>4. 产出 qa_final_report.json/.md | tests/ 四层 + 测试报告 |
 | **Phase 5 文档与交付** | 核查者 | 全部产物 | 1. 生成/更新 architecture.md、user_manual.md（复用 analyze 的 design docs 和 README.patch.md）<br>2. 跑通对齐检查清单<br>3. 产出交付总结（JSON + MD） | 对齐的完整工程 + 交付报告 |
 
 > 注：normalize 验证采用**契约审计 + 基线比对**（针对"代码改了没坏"）。不复用 ABC 验证闭环——复用文档已经过 analyze 验证，改造重点是行为不变。
@@ -154,7 +154,7 @@ code-analyze-sop      只读逆向，产出蓝图
 
 ---
 
-## 七、复用 code-analyze-sop 产物的清单
+## 七、复用 sop-code-analyze 产物的清单
 
 | 蓝图产物 | 在 normalize 中的用途 |
 |----------|----------------------|
@@ -175,7 +175,7 @@ code-analyze-sop      只读逆向，产出蓝图
 | **L1/L2 不改接口签名** | 接口签名变更走红色路径，需用户确认 |
 | **不按猜测补注解** | `[inferred]`/`[unknown]` 接口必须用户确认后才补 |
 | **行为不变** | 基线比对不一致 → 阻断，不得带病交付 |
-| **独立提交** | 每个 L1 模块 / 每个 hint 独立 commit，符合 dev-workflow-sop 提交规范 |
+| **独立提交** | 每个 L1 模块 / 每个 hint 独立 commit，符合 sop-dev-workflow 提交规范 |
 | **L3 需确认** | 代码拆分（L3）逐条用户确认后执行 |
 | **循环 import 只提示** | 隐式耦合/循环 import 不擅自拆分，写入交付报告 |
 
@@ -186,7 +186,7 @@ code-analyze-sop      只读逆向，产出蓝图
 支持 `--module <X>` 只改造单个模块，用于大仓库分批推进：
 
 ```
-code-normalize-sop <repo> --module module_a
+sop-code-normalize <repo> --module module_a
 ```
 
 - 未指定模块 → 按蓝图 development_order 全量改造
@@ -214,7 +214,7 @@ code-normalize-sop <repo> --module module_a
 ### 执行顺序
 
 ```
-1. 确认蓝图存在（<repo>-analyze-sop/），没有则先跑 code-analyze-sop
+1. 确认蓝图存在（<repo>-analyze-sop/），没有则先跑 sop-code-analyze
 2. git clone 原仓库 → <repo>-normalize-sop/
 3. 加载 refactorer.md → Phase 1 结构重构
 4. 加载 refactorer.md → Phase 2 接口规范化（hints，inferred 先确认）
@@ -229,10 +229,10 @@ code-normalize-sop <repo> --module module_a
 ## 十一、与其他 Skill 的衔接
 
 ```
-改造前: code-analyze-sop <repo>          → 产出蓝图
-改造中: code-normalize-sop <repo>        → 产出对齐副本
-改造后: dev-workflow-sop（在副本上新增功能 → 正常 Phase 1-5）
-持续:   code-analyze-sop --check         → 定期核对副本文档与代码一致性
+改造前: sop-code-analyze <repo>          → 产出蓝图
+改造中: sop-code-normalize <repo>        → 产出对齐副本
+改造后: sop-dev-workflow（在副本上新增功能 → 正常 Phase 1-5）
+持续:   sop-code-analyze --check         → 定期核对副本文档与代码一致性
 ```
 
 ---

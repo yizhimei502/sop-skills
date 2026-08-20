@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "delivery_report_schema",
   "title": "交付总结报告",
-  "description": "code-normalize-sop Phase 5 产出的交付总结 Schema",
+  "description": "sop-code-normalize Phase 5 产出的交付总结 Schema",
   "type": "object",
   "required": ["delivery_time", "source_repo", "normalize_dir", "blueprint_dir", "checklist", "modules_normalized", "tests_summary", "hidden_couplings_remaining", "conclusion"],
   "properties": {

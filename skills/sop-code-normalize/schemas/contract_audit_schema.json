@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "contract_audit_schema",
   "title": "契约审计报告",
-  "description": "code-normalize-sop Phase 3 产出的契约审计报告 Schema",
+  "description": "sop-code-normalize Phase 3 产出的契约审计报告 Schema",
   "type": "object",
   "required": ["audit_time", "module", "baseline_result", "contract_status", "signatures_checked", "findings"],
   "properties": {

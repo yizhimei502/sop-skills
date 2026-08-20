@@ -1,5 +1,5 @@
 ---
-name: dev-workflow-sop
+name: sop-dev-workflow
 description: >
   通用软件开发流程 SOP — 多角色协作（架构师/设计师/评审员/开发/测试）、契约驱动、闭卷考试。
   TRIGGER when the user mentions: new project development, adding/deleting modules, requirement changes,
@@ -9,13 +9,13 @@ description: >
   code review gates, design document templates, or multi-role software development pipelines.
 ---
 
-<!-- 本文件基于 dev-workflow-sop.md v1.2 生成 -->
+<!-- 本文件基于 sop-dev-workflow.md v1.2 生成 -->
 
-# dev-workflow-sop — 通用软件开发流程 Skill
+# sop-dev-workflow — 通用软件开发流程 Skill
 
 ## 一、核心定位与哲学
 
-- **名称**：`dev-workflow-sop`
+- **名称**：`sop-dev-workflow`
 - **输入**：自然语言需求（新建项目 / 新增模块 / 删除模块 / 需求变更 / 性能优化 / 依赖升级 / 配置变更 / 版本回滚 / 只读查询）
 - **输出**：静态工程资产（设计文档、用户手册、源代码、冒烟测试、单元测试、契约测试、验收测试、配置模板、模块注册表、迁移脚本、审计报告）
 - **不输出**：编译中间产物（`.o`/`.pyc`/`.class`）、运行时数据（`.db`/`.log`）、依赖缓存（`node_modules/`）

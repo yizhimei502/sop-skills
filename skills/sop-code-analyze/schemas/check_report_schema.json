@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "check_report_schema",
   "title": "一致性检查差异报告",
-  "description": "code-analyze-sop --check 模式产出的机读差异报告 Schema",
+  "description": "sop-code-analyze --check 模式产出的机读差异报告 Schema",
   "type": "object",
   "required": ["check_time", "design_source", "summary", "details", "skipped_docs"],
   "properties": {
