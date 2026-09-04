@@ -52,3 +52,7 @@ skills/
 ## License
 
 MIT
+
+## Changelog
+
+- **v1.3（2026-09-04）**：sop-dev-workflow 新增「轻量任务路径/里程碑化/文档治理规范/依赖升级模板」，红线 15→19；评审员 PASS with notes 与增量评审；测试Agent 断言演进授权与停滞接管协议。
